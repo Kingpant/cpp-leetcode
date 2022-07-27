@@ -12,9 +12,9 @@ public:
         return subString;
     }
 
-    int findChar(string s, char c) {
+    int findChar(string s, char c, bool isValid[]) {
         for (int i = 0; i < s.size(); i++) {
-            if (s[i] == c) {
+            if (s[i] == c && !isValid[i]) {
                 return i;
             }
         }
@@ -26,22 +26,20 @@ public:
         int problemSize = s2.size();
         
         for(int l = 0, r = permSize; r <= problemSize; l++ , r++) {
-            bool isValid[permSize];
+            bool isProblemValid[permSize];
             for (int i = 0; i < permSize; i++) {
-                isValid[i] = false;
+                isProblemValid[i] = false;
             }
 
             for (int i = 0; i < permSize; i++) {
-                int foundIndex = findChar(slice(s2, l, r), s1[i]);
-                cout << s1[i] << " " << foundIndex << slice(s2, l, r) << endl;
+                int foundIndex = findChar(slice(s2, l, r), s1[i], isProblemValid);
                 if (foundIndex < 0) {
                     break;
                 }
-                isValid[foundIndex] = true;
+                isProblemValid[foundIndex] = true;
             }
-            cout << "============================" << endl;
             for (int i = 0; i < permSize; i++) {
-                if (!isValid[i]) {
+                if (!isProblemValid[i]) {
                     break;
                 }
                 if (i == permSize - 1) {
